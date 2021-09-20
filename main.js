@@ -5,6 +5,7 @@ const log = require('./modules/helper/logger');
 let cors = require('cors');
 require('dotenv').config();
 app.use(bodyParser.json());
+const db = require('./modules/helper/database');
 
 app.use(cors())
 app.options('*', cors())

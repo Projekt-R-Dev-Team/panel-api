@@ -1,4 +1,8 @@
-function message(message) {
+function message(message, sender) {
+    if (sender) {
+        console.log(`[Info] ${ '[' + sender + ']' } ${new Date().toLocaleTimeString()}: ${message}`);
+        return;
+    }
     console.log(`[Info] ${new Date().toLocaleTimeString()}: ${message}`);
 }
 
@@ -8,7 +12,7 @@ function error(errormessage, level) {
     } else {
         console.log(`[Error] ${new Date().toLocaleTimeString()}: ${errormessage}`);
     }
-    
+
 }
 
 function warning(warnmessage) {
