@@ -12,7 +12,7 @@ function error(errormessage, level) {
 }
 
 function warning(warnmessage) {
-    console.log(`[Warning] ${new Date().toLocaleTimeString()}: ${errormessage}`);
+    console.log(`[Warning] ${new Date().toLocaleTimeString()}: ${warnmessage}`);
 }
 
 module.exports = {
