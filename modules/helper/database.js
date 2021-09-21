@@ -35,7 +35,7 @@ async function select(FIELDS, TABLE, WHERE, data) {
 
             result = {
                 "rows" : result,
-                "length" : result.length
+                "length" : result.length || null
             }
 
             resolve(result);
