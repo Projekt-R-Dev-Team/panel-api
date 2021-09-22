@@ -12,7 +12,7 @@ router.post('/login', ((request, response) => {
                 response.status(200).send({ token: jwt.generateToken(result.rows[0].username, result.rows[0].password)});
             } else {
                 log.info(`User '${request.body.username}', wrong username or password`, "LOGIN")
-                response.status(403).send('Wrong username or password');
+                response.status(401).send('Wrong username or password');
             }
         })
     } else {
