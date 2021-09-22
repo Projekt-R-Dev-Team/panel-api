@@ -3,5 +3,5 @@ module.exports = function (app) {
         res.send('[' + new Date().toLocaleTimeString() + '] Panel API is running!');
     });
 
-    require('./modules/user/user-router')(app);
+    require('./modules/user/router')(app);
 };
