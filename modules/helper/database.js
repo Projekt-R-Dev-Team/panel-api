@@ -33,9 +33,11 @@ async function select(FIELDS, TABLE, WHERE, data) {
                 reject(error);
             }
 
-            result = {
-                "rows" : result,
-                "length" : result.length
+            if (result) {
+                result = {
+                    "rows" : result,
+                    "length" : result.length
+                }
             }
 
             resolve(result);

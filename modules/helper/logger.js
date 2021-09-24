@@ -48,8 +48,19 @@ function warning(warnmessage, sender) {
     console.log(`[Warning] ${ '[' + sender + ']' } ${new Date().toLocaleTimeString()}: ${warnmessage}`);
 }
 
+function info(message, sender) {
+    if (process.env.DEBUG) {
+        if (sender) {
+            console.log(`[Info] ${ '[' + sender + ']' } ${new Date().toLocaleTimeString()}: ${message}`);
+            return;
+        }
+        console.log(`[Info] ${new Date().toLocaleTimeString()}: ${message}`);
+    }
+}
+
 module.exports = {
     message,
     error,
-    warning
+    warning,
+    info
 }
