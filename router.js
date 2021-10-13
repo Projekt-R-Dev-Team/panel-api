@@ -4,4 +4,8 @@ module.exports = function (app) {
     });
 
     require('./modules/user/router')(app);
+    require('./modules/server/router')(app);
+    require('./modules/news/router')(app);
+    require('./modules/groups/router')(app);
+    require('./modules/execute/router')(app);
 };

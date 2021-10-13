@@ -35,7 +35,7 @@ async function select(FIELDS, TABLE, WHERE, data) {
 
             if (result) {
                 result = {
-                    "rows" : result,
+                    "results" : result,
                     "length" : result.length
                 }
             }
@@ -45,6 +45,133 @@ async function select(FIELDS, TABLE, WHERE, data) {
     })
 }
 
+async function insert(TABLE, FIELDS, VALUES, data) {
+
+    if (!data) data = {};
+
+    if (!FIELDS || !TABLE) {
+        logger.warning("'FIELDS' or 'TABLE' are empty", "Database");
+    }
+
+    return new Promise((resolve, reject) => {
+        connection.query(`INSERT INTO ${TABLE} (${FIELDS}) VALUES(${VALUES})`, data, (error, result) => {
+            if (error) {
+                logger.error(error, "DATABASE")
+                reject(error);
+            }
+
+            if (result) {
+                result = {
+                    "results" : result
+                }
+            }
+
+            resolve(result);
+        });
+    })
+}
+
+async function update(TABLE, FIELDS, WHERE, data) {
+    if (!FIELDS || !TABLE) {
+        logger.warning("'FIELDS' or 'TABLE' are empty", "Database");
+    }
+
+    let where;
+
+    if (WHERE) {
+        where = `WHERE ${WHERE}`;
+    } else {
+        where = '';
+    }
+    return new Promise((resolve, reject) => {
+        connection.query(`UPDATE ${TABLE} SET ${FIELDS} ${where}`, data, (error, result) => {
+            if (error) {
+                logger.error(error, "DATABASE")
+                reject(error);
+            }
+
+            if (result) {
+                result = {
+                    "results" : result
+                }
+            }
+
+            resolve(result);
+        });
+    })
+}
+
+async function selectInnerJoin(FIELDS, TABLE, INNERJoin, data) {
+    let innerjoin;
+
+    if (INNERJoin) {
+        innerjoin = `INNER JOIN ${INNERJoin}`;
+    } else {
+        innerjoin = '';
+    }
+
+    if (!FIELDS || !TABLE) {
+        logger.warning("'FIELDS' or 'TABLE' are empty", "Database");
+    }
+
+    return new Promise((resolve, reject) => {
+        connection.query(`SELECT ${FIELDS} FROM ${TABLE} ${innerjoin}`, data, (error, result) => {
+            if (error) {
+                logger.error(error, "DATABASE")
+                reject(error);
+            }
+
+            if (result) {
+                result = {
+                    "results" : result,
+                    "length" : result.length
+                }
+            }
+
+            resolve(result);
+        });
+    })
+}
+
+async function deleteRow(TABLE, WHERE, data) {
+    if (!TABLE) {
+        logger.warning("'FIELDS' or 'TABLE' are empty", "Database");
+    }
+
+    let where;
+
+    if (WHERE) {
+        where = `WHERE ${WHERE}`;
+    } else {
+        where = '';
+    }
+    return new Promise((resolve, reject) => {
+        connection.query(`DELETE FROM ${TABLE} ${where}`, data, (error, result) => {
+            if (error) {
+                logger.error(error, "DATABASE")
+                reject(error);
+            }
+
+            if (result) {
+                result = {
+                    "results" : result
+                }
+            }
+
+            resolve(result);
+        });
+    })
+}
+
+function getIds(resp) {
+    return resp.results.map(item => item.id);
+}
+
 module.exports = {
-    select
+    select,
+    insert,
+    update,
+    deleteRow,
+    selectInnerJoin,
+    getIds
 }
